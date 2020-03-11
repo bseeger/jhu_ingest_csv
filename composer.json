@@ -1,0 +1,15 @@
+{
+  "name": "drupal/jhu_ingest_csv",
+  "type": "drupal-module",
+  "description": "A test ingest of JHU data",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.github.com/bseeger/jhu_ingest_csv",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.github.com/bseeger/jhu_ingest_csv/issues"
+  },
+  "require": { 
+    "drupal/migrate_source_csv" : "^2.2"
+  }
+}

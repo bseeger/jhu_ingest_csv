@@ -1,0 +1,7 @@
+name: 'JHU Ingest Test/Template'
+type: module
+description: 'A template for JHU Ingests'
+core: 8.x
+package: 'Islandora'
+dependencies:
+  - jhu_ingest_csv

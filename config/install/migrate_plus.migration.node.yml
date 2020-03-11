@@ -1,0 +1,120 @@
+# Uninstall this config when the feature is uninstalled
+dependencies:
+  enforced:
+    module:
+      - jhu_ingest_csv
+
+id: node 
+label: Import Nodes from CSV for JHU Test
+migration_group: jhu_ingest_csv
+
+source:
+  plugin: csv
+  path: modules/contrib/jhu_ingest_csv/data/JHUTestIngest.csv
+
+  # 1 means you have a header row, 0 means you don't
+  header_row_count: 1
+
+  # Each migration needs a unique key per row in the csv.  Here we're using the file path.
+  keys:
+    - file 
+
+  # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
+  constants:
+
+    # Everything gets created as admin
+    uid: 1
+
+# Set fields using values from the CSV
+process:
+  title: title
+  uid: constants/uid
+
+  # We use the skip_on_empty plugin because
+  # not every row in the CSV has subtitle filled
+  # in.
+  field_alternative_title:
+    plugin: skip_on_empty
+    source: subtitle 
+    method: process
+
+  # Dates are EDTF strings
+  field_edtf_date_issued: date_issued
+
+  # Dates are EDTF strings
+  field_edtf_date_created: date_accessioned
+
+  field_identifier: identifier_other
+
+  field_description: abstract
+
+  field_rights: rights
+
+  field_display_hints:
+    -
+      plugin: skip_on_empty
+      source: display 
+      method: process
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: islandora_display
+
+  # Make the object an 'Image'
+  field_model:
+    plugin: entity_lookup
+    source: model
+    entity_type: taxonomy_term
+    value_key: name 
+    bundle_key: vid
+    bundle: islandora_models 
+
+  # Split up our pipe-delimited string of
+  # subjects, and generate terms for each.
+  field_subject:
+    -
+      plugin: skip_on_empty
+      source: subject 
+      method: process
+    -
+      plugin: explode
+      delimiter: '--'
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: subject
+
+  languages: 
+    -
+      source: languages
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: explode
+      delimiter: '|'
+    -
+      plugin: str_to_assoc
+      key: 'name'
+       
+  languages_creator: 
+    plugin: sub_process
+    source: '@languages'
+    process: 
+        target_id: 
+          plugin: entity_generate
+          source: name
+          entity_type: taxonomy_term
+          value_key: name
+          bundle_key: vid
+          bundle: 'language'
+
+  field_language: '@languages'
+
+# We're making nodes
+destination:
+  plugin: 'entity:node'
+  default_bundle: islandora_object
