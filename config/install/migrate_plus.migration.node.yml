@@ -17,7 +17,7 @@ source:
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
   keys:
-    - file 
+    - ID
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
@@ -39,16 +39,31 @@ process:
     method: process
 
   # Dates are EDTF strings
-  field_edtf_date_issued: date_issued
+  field_edtf_date_issued:
+    plugin: skip_on_empty
+    source: date_issued 
+    method: process
 
   # Dates are EDTF strings
-  field_edtf_date_created: date_accessioned
+  field_edtf_date_created:
+    plugin: skip_on_empty
+    source: date_accessioned
+    method: process
 
-  field_identifier: identifier_other
+  field_identifier:
+    plugin: skip_on_empty
+    source: identifier_other
+    method: process
 
-  field_description: abstract
+  field_description:
+    plugin: skip_on_empty
+    source: description
+    method: process
 
-  field_rights: rights
+  field_rights:
+    plugin: skip_on_empty
+    source: rights
+    method: process
 
   field_display_hints:
     -
@@ -70,6 +85,17 @@ process:
     value_key: name 
     bundle_key: vid
     bundle: islandora_models 
+
+  field_member_of:
+    -
+      plugin: skip_on_empty
+      source: parent_id
+      method: process
+    -
+      plugin: migration_lookup
+      source: parent_id
+      migration: node
+      no_stub: true
 
   # Split up our pipe-delimited string of
   # subjects, and generate terms for each.
@@ -113,6 +139,11 @@ process:
           bundle: 'language'
 
   field_language: '@languages'
+
+  field_weight:
+    plugin: skip_on_empty
+    source: sequence_id
+    method: process
 
 # We're making nodes
 destination:

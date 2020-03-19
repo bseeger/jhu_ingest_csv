@@ -17,17 +17,27 @@ source:
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
   keys:
-    - file
+    - ID
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
-    # We're tagging our media as Original Files 
-    use: Original File 
 
     # Everything gets created as admin
     uid: 1
 
+
 process:
+
+  # skip this if it's not an item requring a file
+  circuit_breaker:
+    plugin: skip_on_value
+    source: model
+    method: row
+    value:
+      - 'Collection'
+      - 'collection'
+      - 'Paged Content'
+      - 'paged content'
 
   name: title
   uid: constants/uid
@@ -35,7 +45,7 @@ process:
   # Make the media an 'Original File'
   field_media_use:
     plugin: entity_lookup
-    source: constants/use
+    source: media_use
     entity_type: taxonomy_term
     value_key: name 
     bundle_key: vid
@@ -53,7 +63,7 @@ process:
           - image
     -
       plugin: migration_lookup
-      source: file 
+      source: ID
       migration: file 
       no_stub: true
 
@@ -69,7 +79,7 @@ process:
         - file
     -
       plugin: migration_lookup
-      source: file
+      source: ID
       migration: file
       no_stub: true
   
@@ -85,7 +95,7 @@ process:
         - audio
     -
       plugin: migration_lookup
-      source: file
+      source: ID
       migration: file
       no_stub: true
 
@@ -93,7 +103,7 @@ process:
   # Lookup the migrated node in the node migration
   field_media_of:
     plugin: migration_lookup
-    source: file 
+    source: ID
     migration: node 
     no_stub: true
   

@@ -18,7 +18,7 @@ source:
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
   keys: 
-    - file 
+    - ID
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
@@ -31,9 +31,23 @@ source:
     uid: 1
 
 process:
+  # skip this if it's not an item requring a file
+  circuit_breaker:
+    plugin: skip_on_value
+    source: model
+    method: row
+    value:
+      - 'Collection'
+      - 'collection'
+      - 'Paged Content'
+      - 'paged content'
+
+
   # Set these properties from constants.
   filemime: mimetype
   uid: constants/uid
+
+  
   # Hack the file name out of the full path provided in the 'file' column.
   filename:
     -
