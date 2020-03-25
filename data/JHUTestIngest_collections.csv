@@ -1,0 +1,7 @@
+ID,parent_id,uuid,title,description,language,model
+1,,,Oral Histories Collection,Digital audio and video files of oral histories and PDFs of oral history transcripts.,,Collection
+2,,,News-Letters Collection,PDF copies of JHU News-Letter (student newspaper). ,,Collection
+3,,,Maps & Atlases Collections,"Scanned images of maps, atlases and aerial photographs covering Maryland, Baltimore City, Maryland counties and geographic regions.",,Collection
+4,3,,Child Map Collection,Child of Maps,,Collection
+5,,,Science Review Collection,"Digitized video files of episodes of the Johns Hopkins Science Review and three related television series, produced by Johns Hopkins University from 1948 to 1960.",,Collection
+6,,,Graphic & Pictorial Collection,"This digital collection consists of photographs, lantern slides, and negatives of individuals, events, and places associated with the history of Johns Hopkins University from the 1800s to the present.",,Collection
