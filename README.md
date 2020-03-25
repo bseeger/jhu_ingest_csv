@@ -51,22 +51,31 @@ The key to the ingest is to ingest items in this order:
 * media
 
 If you don’t ingest the files and nodes first, media ingest will fail as Media are the items that associate a Node with a File. 
+
 First, if not already on the server:
+
 `vagrant ssh`
 
 Then, we need to be in drupal web space:
+
 `cd /var/www/html/drupal/web/modules/contrib/jhu_ingest_csv`  
 
 (see above about how to enable the module, if you already haven't)
 
+#### Collections
+
 First, ingest collections: 
+
 `drush -y --userid=1 --uri=localhost:8000 migrate:import collections`
 
 Now you will have few nodes that are collections in your system. The example includes showing how to create a subcollection.
 
+#### Files, Nodes, Media
+
 This next section will show how to import the first set of data - simple one image or one pdf resources. 
 
 First, start with the files: 
+
 `drush -y --userid=1 --uri=localhost:8000 migrate:import file_1`
 
 (Note: From here on out you can use the Islandora UI (Structure -> Migrations, jhu_ingest_csv -> List migrations). (_Note: In theory,
