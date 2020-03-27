@@ -104,18 +104,14 @@ process:
 
   field_member_of:
     -
-      plugin: skip_on_empty
-      source:
-        - '@parent_id'
-        - '@collection_id'
-      method: process
-    -
       plugin: concat
       source:
         - '@parent_id'
         - '@collection_id'
       method: process
-
+    -
+      plugin: skip_on_empty
+      method: process
   # Split up our pipe-delimited string of
   # subjects, and generate terms for each.
   field_subject:
