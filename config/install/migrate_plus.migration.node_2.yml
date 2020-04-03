@@ -86,7 +86,7 @@ process:
     bundle_key: vid
     bundle: islandora_models 
 
- parent_id:
+  parent_id:
     plugin: migration_lookup
     source: parent_id
     migration: node_1
