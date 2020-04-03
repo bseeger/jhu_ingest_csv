@@ -89,7 +89,7 @@ process:
   parent_id:
     plugin: migration_lookup
     source: parent_id
-    migration: node_1
+    migration: node_2
     no_stub: true
 
   collection_id:
