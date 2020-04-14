@@ -6,7 +6,7 @@ This repository is based on the work done in the [islandora/migrate_islandora_cs
 
 This repository, __jhu_ingest_csv__, is a test repository to help migrate some sample JHU data into Drupal 8 using Migrate tools to create Islandora content in 8.  It can be used as a template for ingests.  You might find it helpful as another example to follow when working with migrations.  The test data includes Image, Audio and PDF objects.
 
-This repository contains a `data` folder containing a CSV and the sample files, as a convenience so that the accompanying files are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
+This repository contains a `data` folder containing a CSV and an empty directory where the files would be found. The files are not included due to size restrictions. 
 
 This repository may function as a template for JHU (and others) to create the yml files defining migrations.
 
